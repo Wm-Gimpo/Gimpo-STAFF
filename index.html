@@ -79,6 +79,9 @@
             <button onclick="switchTab('schedule')" id="tab-schedule" class="tab-btn py-3 px-4 border-b-2 border-transparent text-purple-200 hover:text-white flex items-center gap-2 whitespace-nowrap">
                 <i class="fa-regular fa-clock"></i> 당일 시간표
             </button>
+            <button onclick="switchTab('reference')" id="tab-reference" class="tab-btn py-3 px-4 border-b-2 border-transparent text-purple-200 hover:text-white flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-map-location-dot"></i> 참고 (세팅 & 1층 배치도)
+            </button>
         </div>
     </header>
 
@@ -270,6 +273,190 @@
             </div>
         </section>
 
+        <!-- Tab 4: Reference (Setup Checklist & 1F Layout Map) -->
+        <section id="view-reference" class="hidden space-y-6">
+            <!-- Setup Checklist Card -->
+            <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-purple-200/80 space-y-5">
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-purple-100 pb-4">
+                    <div>
+                        <span class="text-xs font-extrabold text-purple-700 bg-purple-100 px-2.5 py-1 rounded-full">SETUP GUIDE</span>
+                        <h2 class="text-lg sm:text-xl font-extrabold text-indigo-950 mt-1.5 flex items-center gap-2">
+                            <i class="fa-solid fa-toolbox text-purple-600"></i> 사전 설치 및 물품 세팅 체크리스트
+                        </h2>
+                        <p class="text-xs text-slate-500 mt-0.5">오전 09:50 배너·현수막 설치 및 1층 로비 물품 정리 시 참고할 기준표입니다.</p>
+                    </div>
+                </div>
+
+                <div id="referenceChecklistContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Rendered dynamically -->
+                </div>
+            </div>
+
+            <!-- 1F Layout Diagram Card -->
+            <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-purple-200/80 space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-purple-100 pb-4">
+                    <div>
+                        <span class="text-xs font-extrabold text-amber-800 bg-amber-100 px-2.5 py-1 rounded-full border border-amber-300">FLOOR PLAN</span>
+                        <h2 class="text-lg sm:text-xl font-extrabold text-indigo-950 mt-1.5 flex items-center gap-2">
+                            <i class="fa-solid fa-compass-drafting text-purple-600"></i> 1층 로비 세팅 및 안내 배치도
+                        </h2>
+                        <p class="text-xs text-slate-500 mt-0.5">1층 입구 진입 기준 책상, 배너, 현수막, 방명록 및 동선 위치도입니다.</p>
+                    </div>
+                    <span class="text-xs font-bold text-purple-700 bg-purple-50 px-3 py-1.5 rounded-xl border border-purple-200">
+                        <i class="fa-solid fa-Layer-group mr-1"></i> B2층 본당 이동 동선 포함
+                    </span>
+                </div>
+
+                <!-- Clean Digital Architectural SVG Floor Plan -->
+                <div class="w-full overflow-x-auto bg-slate-50/70 rounded-2xl border-2 border-purple-100 p-2 sm:p-4">
+                    <svg viewBox="0 0 800 620" class="w-full h-auto max-w-3xl mx-auto select-none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <pattern id="dotGrid" width="24" height="24" patternUnits="userSpaceOnUse">
+                                <circle cx="4" cy="4" r="1.2" fill="#cbd5e1" />
+                            </pattern>
+                            <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="115%">
+                                <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#1e1b4b" flood-opacity="0.08"/>
+                            </filter>
+                            <marker id="arrowPurple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                <path d="M 0 1 L 10 5 L 0 9 z" fill="#7e22ce" />
+                            </marker>
+                            <marker id="arrowAmber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                <path d="M 0 1 L 10 5 L 0 9 z" fill="#d97706" />
+                            </marker>
+                        </defs>
+
+                        <!-- Background with subtle grid -->
+                        <rect x="10" y="10" width="780" height="600" rx="20" fill="#fefce8" fill-opacity="0.45" stroke="#e2e8f0" stroke-width="2"/>
+                        <rect x="10" y="10" width="780" height="600" rx="20" fill="url(#dotGrid)" />
+
+                        <!-- TOP-LEFT: Staircase Corner Banner Note -->
+                        <g filter="url(#cardShadow)">
+                            <rect x="45" y="45" width="175" height="72" rx="14" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+                            <circle cx="72" cy="81" r="15" fill="#f59e0b"/>
+                            <text x="72" y="86" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="900">배너</text>
+                            <text x="98" y="74" fill="#78350f" font-size="14" font-weight="800">계단 각 모퉁이</text>
+                            <text x="98" y="95" fill="#92400e" font-size="13" font-weight="700">배너 설치 (4개)</text>
+                        </g>
+                        <path d="M 132 117 L 132 162" stroke="#d97706" stroke-width="2.5" stroke-dasharray="4 4" marker-end="url(#arrowAmber)"/>
+
+                        <!-- LEFT: Stairs (계단 -> B2층 본당 이동) -->
+                        <g filter="url(#cardShadow)">
+                            <rect x="55" y="175" width="155" height="235" rx="12" fill="#ffffff" stroke="#64748b" stroke-width="2.5"/>
+                            <!-- Stair steps lines -->
+                            <line x1="86" y1="175" x2="86" y2="410" stroke="#94a3b8" stroke-width="2"/>
+                            <line x1="117" y1="175" x2="117" y2="410" stroke="#94a3b8" stroke-width="2"/>
+                            <line x1="148" y1="175" x2="148" y2="410" stroke="#94a3b8" stroke-width="2"/>
+                            <line x1="179" y1="175" x2="179" y2="410" stroke="#94a3b8" stroke-width="2"/>
+                            <!-- Top & Bottom rails -->
+                            <line x1="45" y1="175" x2="220" y2="175" stroke="#334155" stroke-width="3.5" stroke-linecap="round"/>
+                            <line x1="45" y1="410" x2="220" y2="410" stroke="#334155" stroke-width="3.5" stroke-linecap="round"/>
+                            <!-- Label Badge -->
+                            <rect x="192" y="250" width="46" height="85" rx="10" fill="#1e1b4b"/>
+                            <text x="215" y="285" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="900">계</text>
+                            <text x="215" y="312" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="900">단</text>
+                            <text x="132" y="435" text-anchor="middle" fill="#475569" font-size="12" font-weight="800">▼ B2층 본당 이동 계단</text>
+                        </g>
+
+                        <!-- TOP-CENTER: Main Table (김포 연합 사역 리플렛 & 검정색 암막천) -->
+                        <g filter="url(#cardShadow)">
+                            <!-- Staff / Items behind table: 주보 & 사역소개 -->
+                            <ellipse cx="330" cy="82" rx="48" ry="32" fill="#f3e8ff" stroke="#7e22ce" stroke-width="2.5"/>
+                            <text x="330" y="87" text-anchor="middle" fill="#581c87" font-size="16" font-weight="900">주보</text>
+
+                            <ellipse cx="465" cy="92" rx="42" ry="26" fill="#e0e7ff" stroke="#4338ca" stroke-width="2.5"/>
+                            <text x="465" y="97" text-anchor="middle" fill="#312e81" font-size="14" font-weight="900">사역소개</text>
+
+                            <!-- Blackout cloth label -->
+                            <rect x="335" y="122" width="140" height="24" rx="6" fill="#1e293b"/>
+                            <text x="405" y="138" text-anchor="middle" fill="#f8fafc" font-size="12" font-weight="800">검정색 암막천 세팅</text>
+
+                            <!-- Long Table 1 -->
+                            <rect x="280" y="148" width="255" height="68" rx="10" fill="#ffffff" stroke="#1e1b4b" stroke-width="3"/>
+                            <rect x="286" y="154" width="243" height="56" rx="7" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+                            <text x="407" y="187" text-anchor="middle" fill="#1e1b4b" font-size="17" font-weight="900">김포 연합 사역 (리플렛)</text>
+                        </g>
+
+                        <!-- TOP-RIGHT: Restroom & Elevator Direction -->
+                        <g filter="url(#cardShadow)">
+                            <rect x="595" y="75" width="155" height="66" rx="14" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+                            <text x="672" y="103" text-anchor="middle" fill="#1e3a8a" font-size="15" font-weight="900">화장실 및 엘베</text>
+                            <text x="672" y="124" text-anchor="middle" fill="#2563eb" font-size="12" font-weight="700">(우측 통로 안내)</text>
+                        </g>
+                        <!-- Direction pointer line as in sketch -->
+                        <path d="M 555 215 L 625 152" stroke="#2563eb" stroke-width="3" stroke-linecap="round" marker-end="url(#arrowPurple)"/>
+
+                        <!-- RIGHT-CENTER: Guestbook Table (방명록 작성 긴책상 + 의자) -->
+                        <g filter="url(#cardShadow)">
+                            <!-- Long Table 2 (Vertical) -->
+                            <rect x="495" y="255" width="92" height="240" rx="10" fill="#ffffff" stroke="#1e1b4b" stroke-width="3"/>
+                            <rect x="502" y="262" width="78" height="226" rx="6" fill="#faf5ff" stroke="#d8b4fe" stroke-width="1.5"/>
+
+                            <!-- 3 Guestbook Pads on Table -->
+                            <rect x="515" y="278" width="52" height="32" rx="4" fill="#ffffff" stroke="#6b21a8" stroke-width="2"/>
+                            <rect x="515" y="335" width="52" height="32" rx="4" fill="#ffffff" stroke="#6b21a8" stroke-width="2"/>
+                            <rect x="515" y="425" width="52" height="32" rx="4" fill="#ffffff" stroke="#6b21a8" stroke-width="2"/>
+
+                            <text x="541" y="392" text-anchor="middle" fill="#3b0764" font-size="15" font-weight="900">방명록</text>
+                            <text x="541" y="412" text-anchor="middle" fill="#3b0764" font-size="15" font-weight="900">작성대</text>
+
+                            <!-- Chairs beside Guestbook Table -->
+                            <circle cx="614" cy="318" r="21" fill="#fef3c7" stroke="#d97706" stroke-width="2.5"/>
+                            <text x="614" y="323" text-anchor="middle" fill="#92400e" font-size="11" font-weight="800">의자</text>
+
+                            <circle cx="614" cy="420" r="21" fill="#fef3c7" stroke="#d97706" stroke-width="2.5"/>
+                            <text x="614" y="425" text-anchor="middle" fill="#92400e" font-size="11" font-weight="800">의자</text>
+                        </g>
+
+                        <!-- FAR-RIGHT: Bulletin Board / Banner Wall (게시판 [현수막]) -->
+                        <g filter="url(#cardShadow)">
+                            <rect x="665" y="185" width="68" height="340" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.5"/>
+                            <text x="699" y="275" text-anchor="middle" fill="#14532d" font-size="17" font-weight="900">게</text>
+                            <text x="699" y="302" text-anchor="middle" fill="#14532d" font-size="17" font-weight="900">시</text>
+                            <text x="699" y="329" text-anchor="middle" fill="#14532d" font-size="17" font-weight="900">판</text>
+                            <text x="699" y="362" text-anchor="middle" fill="#15803d" font-size="14" font-weight="800">(현</text>
+                            <text x="699" y="385" text-anchor="middle" fill="#15803d" font-size="14" font-weight="800">수</text>
+                            <text x="699" y="408" text-anchor="middle" fill="#15803d" font-size="14" font-weight="800">막)</text>
+                        </g>
+
+                        <!-- BOTTOM: Main Entrance (1층 정문 입구) -->
+                        <g filter="url(#cardShadow)">
+                            <path d="M 215 585 L 215 515 L 505 515 L 505 585" fill="#ede9fe" stroke="#4c1d95" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <rect x="295" y="530" width="130" height="42" rx="10" fill="#2e1065"/>
+                            <text x="360" y="557" text-anchor="middle" fill="#fde047" font-size="20" font-weight="900" letter-spacing="4">입 구</text>
+                            <!-- Entry Flow Arrow -->
+                            <path d="M 360 510 L 360 455" stroke="#7e22ce" stroke-width="3" stroke-dasharray="5 5" marker-end="url(#arrowPurple)"/>
+                            <text x="360" y="442" text-anchor="middle" fill="#6b21a8" font-size="12" font-weight="800">성도님 입장 및 주보 배부 동선</text>
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- Summary Pills under Floor Plan -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-xs">
+                    <div class="p-3.5 rounded-xl bg-purple-50 border border-purple-200 flex items-start gap-2.5">
+                        <i class="fa-solid fa-table text-purple-600 mt-0.5 text-sm"></i>
+                        <div>
+                            <strong class="text-indigo-950 block">정면 테이블 (암막천)</strong>
+                            <span class="text-slate-600">김포 연합 사역 리플렛 비치, 뒤편에서 주보 및 사역소개 안내</span>
+                        </div>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-amber-50 border border-amber-200 flex items-start gap-2.5">
+                        <i class="fa-solid fa-pen-clip text-amber-600 mt-0.5 text-sm"></i>
+                        <div>
+                            <strong class="text-indigo-950 block">우측 방명록 & 게시판</strong>
+                            <span class="text-slate-600">방명록 작성 테이블 + 의자 세팅, 우측 벽면 게시판 현수막 설치</span>
+                        </div>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-indigo-50 border border-indigo-200 flex items-start gap-2.5">
+                        <i class="fa-solid fa-stairs text-indigo-600 mt-0.5 text-sm"></i>
+                        <div>
+                            <strong class="text-indigo-950 block">좌측 계단 & 우측 엘베</strong>
+                            <span class="text-slate-600">계단 각 모퉁이 배너(4개) 설치, B2층 본당으로 이동 안내</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- Footer updated to 3 lines: 주최, 주소, 감사 글 -->
@@ -309,21 +496,26 @@
 
         const DEFAULT_DATA = {
             staffList: [
-                { id: "s1", order: 1, church: "넘치는교회", name: "방민서", gender: "남", role: "1층로비", subRole: "1층 로비 인사 및 주보 전달 / 2층 이동 안내" },
-                { id: "s2", order: 2, church: "넘치는교회", name: "이지훈", gender: "남", role: "본당내부", subRole: "본당 좌·우측 앞좌석부터 착석 유도 및 인사" },
-                { id: "s3", order: 3, church: "동산교회", name: "박지선", gender: "여", role: "본당내부", subRole: "본당 좌·우측 앞좌석부터 착석 유도 및 인사" },
-                { id: "s4", order: 4, church: "동산교회", name: "신지은", gender: "여", role: "1층로비", subRole: "1층 로비 인사 및 엘리베이터/계단 안내" },
-                { id: "s5", order: 5, church: "동산교회", name: "홍하은", gender: "여", role: "본당내부", subRole: "본당 좌·우측 앞좌석부터 착석 유도 및 인사" },
+                { id: "s1", order: 1, church: "넘치는교회", name: "방민서", gender: "남", role: "1층로비", subRole: "1층 로비 인사 및 주보 전달 / B2층 이동 안내" },
+                { id: "s2", order: 2, church: "넘치는교회", name: "이지훈", gender: "남", role: "본당내부", subRole: "B2층 본당 좌·우측 앞좌석부터 착석 유도 및 인사" },
+                { id: "s3", order: 3, church: "동산교회", name: "박지선", gender: "여", role: "본당내부", subRole: "B2층 본당 좌·우측 앞좌석부터 착석 유도 및 인사" },
+                { id: "s4", order: 4, church: "동산교회", name: "신지은", gender: "여", role: "1층로비", subRole: "1층 로비 인사 및 엘리베이터/계단(B2층) 안내" },
+                { id: "s5", order: 5, church: "동산교회", name: "홍하은", gender: "여", role: "본당내부", subRole: "B2층 본당 좌·우측 앞좌석부터 착석 유도 및 인사" },
                 { id: "s6", order: 6, church: "동산교회", name: "신재영", gender: "남", role: "주차위원", subRole: "주차 1번 (교회 주차장 입구)" },
                 { id: "s7", order: 7, church: "시티브릿지교회", name: "임은혁", gender: "남", role: "주차위원", subRole: "주차 2번 (주차장 가운데)" },
                 { id: "s8", order: 8, church: "동산교회", name: "정진환", gender: "남", role: "주차위원", subRole: "주차 3번 (정문 앞 주차 구획선)" },
-                { id: "s9", order: 9, church: "-", name: "김윤슬", gender: "여", role: "본당내부", subRole: "본당 좌·우측 앞좌석부터 착석 유도 및 인사" }
+                { id: "s9", order: 9, church: "-", name: "김윤슬", gender: "여", role: "본당내부", subRole: "B2층 본당 좌·우측 앞좌석부터 착석 유도 및 인사" }
             ],
             schedules: [
-                { id: "t1", time: "13시 30분", title: "본인 위치로 이동", note: "각자 배정된 구역(주차장 / 1층 로비 / 2층 본당)으로 이동하여 사전 동선 및 준비물을 점검합니다.", highlight: false },
-                { id: "t2", time: "13시 40분", title: "환영(입장) 및 안내 시작", note: "도착하시는 성도님들을 밝은 인사로 맞이하며 주차 유도, 주보 배부, 본당 앞자리 착석을 안내합니다.", highlight: false },
-                { id: "t3", time: "15시 00분", title: "주차위원 및 1층 로비 인원 본당으로 복귀", note: "※ 중요: 15시 이전에라도 더 이상 오시는 분이 없으면 상호 상황 전달 후 본당(행사장)으로 조기 복귀할 수 있습니다.", highlight: true },
-                { id: "t4", time: "15시 이후", title: "모두 자리에서 김포 기도의 날 참석", note: "스탭 전원 본당 내부로 입장하여 함께 예배 및 기도의 날 행사에 참석합니다.", highlight: false }
+                { id: "t_m1", time: "09시 30분", title: "스탭모임", note: "스탭 전원 집결하여 전체 일정 브리핑 및 기도회 후 구역별 역할을 확인합니다.", highlight: false },
+                { id: "t_m2", time: "09시 50분", title: "배너, 현수막 설치 및 물품 정리", note: "주차장·계단 모퉁이·B2층 본당 배너 설치, 1층 로비 책상/의자(긴의자 2, 의자 4)·방명록 세팅, 포스터 부착 및 현수막(2개)을 설치합니다.", highlight: false },
+                { id: "t_m3", time: "11시 30분", title: "점심식사 세팅", note: "스탭 및 사역자 점심식사 장소와 식사 물품을 준비합니다.", highlight: false },
+                { id: "t_m4", time: "11시 55분", title: "점심식사", note: "함께 식사하며 오후 사역을 위해 교제 및 재충전 시간을 갖습니다.", highlight: false },
+                { id: "t_m5", time: "13시 20분", title: "장내정리", note: "식사 뒷정리 및 1층 로비·B2층 본당 내부·주차장 최종 점검을 마칩니다.", highlight: false },
+                { id: "t1", time: "13시 30분", title: "본인 위치로 이동", note: "각자 배정된 구역(주차장 / 1층 로비 / B2층 본당)으로 이동하여 사전 동선 및 준비물을 점검합니다.", highlight: false },
+                { id: "t2", time: "13시 40분", title: "환영(입장) 및 안내 시작", note: "도착하시는 성도님들을 밝은 인사로 맞이하며 주차 유도, 주보 배부, B2층 본당 앞자리 착석을 안내합니다.", highlight: false },
+                { id: "t3", time: "15시 00분", title: "주차위원 및 1층 로비 인원 B2층 본당으로 복귀", note: "※ 중요: 15시 이전에라도 더 이상 오시는 분이 없으면 상호 상황 전달 후 B2층 본당(행사장)으로 조기 복귀할 수 있습니다.", highlight: true },
+                { id: "t4", time: "15시 이후", title: "모두 자리에서 김포 기도의 날 참석", note: "스탭 전원 B2층 본당 내부로 입장하여 함께 예배 및 기도의 날 행사에 참석합니다.", highlight: false }
             ],
             roleManuals: {
                 parkingNotice: "주차 후 도보중인 분들께서 다치지 않도록 특별히 조심하기. (차량 1대씩 천천히 주차 유도)",
@@ -348,14 +540,20 @@
                     }
                 ],
                 lobbyTasks: [
-                    "들어오시는 분들께 인사(중요!) 및 주보를 전달하고 지하 1층이 아닌 2층(본당)으로 안내",
+                    "들어오시는 분들께 인사(중요!) 및 주보를 전달하고 지하 1층이 아닌 B2층(본당)으로 안내",
                     "오른쪽에 엘리베이터가 위치하고 있어 엘리베이터 희망자는 엘리베이터 위치 안내"
                 ],
                 hallTasks: [
                     "우측 or 좌측 좌석으로 안내하여 앞쪽부터 앉으실 수 있도록 유도",
                     "들어오시는 분들께 밝게 인사드리기 (중요!)"
                 ]
-            }
+            },
+            setupNotes: [
+                { id: "ref1", category: "배너 설치 (총 7개)", detail: "주차장 1개, 계단 각 모퉁이 4개, B2층 본당 2개", icon: "fa-flag" },
+                { id: "ref2", category: "1층 책상·의자 세팅", detail: "긴책상(긴의자 테이블) 2개, 의자 4개 세팅 (검정색 암막천 포함)", icon: "fa-chair" },
+                { id: "ref3", category: "방명록 & 리플렛 세팅", detail: "방명록 세팅, 김포 연합 사역(리플렛)·주보·사역소개 비치 및 포스터 부착", icon: "fa-book-open" },
+                { id: "ref4", category: "현수막 설치 (총 2개)", detail: "현수막 설치 (2개 / 1층 우측 게시판 등 지정 구역)", icon: "fa-scroll" }
+            ]
         };
 
         let appState = JSON.parse(JSON.stringify(DEFAULT_DATA));
@@ -397,7 +595,7 @@
 
         function subscribeToStaffData() {
             if (!db) return;
-            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'eventConfig', 'main_v6');
+            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'eventConfig', 'main_v7');
             onSnapshot(
                 docRef,
                 (snapshot) => {
@@ -405,7 +603,11 @@
                         const cloudData = snapshot.data();
                         if (cloudData && cloudData.payload) {
                             try {
-                                appState = JSON.parse(cloudData.payload);
+                                const parsed = JSON.parse(cloudData.payload);
+                                if (!parsed.setupNotes) {
+                                    parsed.setupNotes = JSON.parse(JSON.stringify(DEFAULT_DATA.setupNotes));
+                                }
+                                appState = parsed;
                                 updateSyncBadge(true, "실시간 동기화됨");
                                 if (!isEditMode) {
                                     renderAll();
@@ -431,7 +633,7 @@
                 return;
             }
             try {
-                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'eventConfig', 'main_v6');
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'eventConfig', 'main_v7');
                 await setDoc(docRef, {
                     payload: JSON.stringify(dataObj),
                     updatedAt: Date.now(),
@@ -465,6 +667,7 @@
             renderStaffTable();
             renderAllRolesManual();
             renderFullSchedule();
+            renderReferenceChecklist();
             updateEditModeUI();
         }
 
@@ -477,7 +680,7 @@
         function getRoleDisplayName(role) {
             if (role === "주차위원") return "주차위원 (야외 주차장)";
             if (role === "1층로비") return "1층 로비 안내 및 주보 전달";
-            if (role === "본당내부") return "2층 본당 내부 안내";
+            if (role === "본당내부") return "B2층 본당 내부 안내";
             return role;
         }
 
@@ -588,7 +791,7 @@
                 detailTaskHtml = `
                     <div class="p-4 rounded-xl bg-indigo-50/70 border border-indigo-200 space-y-2">
                         <h4 class="font-extrabold text-sm text-indigo-950 flex items-center gap-1.5">
-                            <i class="fa-solid fa-chair"></i> 2층 본당 내부 안내 핵심 체크리스트
+                            <i class="fa-solid fa-chair"></i> B2층 본당 내부 안내 핵심 체크리스트
                         </h4>
                         <ul class="space-y-2 pt-1">${listHtml}</ul>
                     </div>
@@ -637,10 +840,10 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-purple-100">
                         <div class="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-xs space-y-1">
                             <span class="font-extrabold text-amber-900 flex items-center gap-1.5">
-                                <i class="fa-solid fa-bell text-amber-600"></i> 본당 복귀 시간 안내
+                                <i class="fa-solid fa-bell text-amber-600"></i> B2층 본당 복귀 시간 안내
                             </span>
                             <p class="text-amber-800 leading-relaxed">
-                                <strong>15시 00분</strong> 본당 복귀 (단, 그전에 오시는 분이 없으면 상황 전달 후 <strong>조기 복귀 가능</strong>)
+                                <strong>15시 00분</strong> B2층 본당 복귀 (단, 그전에 오시는 분이 없으면 상황 전달 후 <strong>조기 복귀 가능</strong>)
                             </p>
                         </div>
                         <div class="p-3.5 rounded-xl bg-purple-50/50 border border-purple-200/80 text-xs space-y-1.5">
@@ -780,7 +983,7 @@
                     </div>
 
                     <div class="p-5 rounded-2xl bg-indigo-50/50 border border-indigo-200 space-y-3">
-                        <span class="px-3 py-1 rounded-lg text-sm font-extrabold badge-hall inline-block">▼ 본당 내부 안내</span>
+                        <span class="px-3 py-1 rounded-lg text-sm font-extrabold badge-hall inline-block">▼ B2층 본당 내부 안내</span>
                         <ul class="space-y-2 pl-1">
                             ${m.hallTasks.map(t => `
                                 <li class="text-sm text-slate-800 font-medium flex items-start gap-2">
@@ -826,7 +1029,7 @@
                     </div>
 
                     <div class="p-5 rounded-2xl bg-slate-100 border-2 border-slate-300 space-y-3">
-                        <h3 class="font-extrabold text-slate-900 text-base">3. 본당 내부 안내 할 일 수정 (줄바꿈으로 항목 구분)</h3>
+                        <h3 class="font-extrabold text-slate-900 text-base">3. B2층 본당 내부 안내 할 일 수정 (줄바꿈으로 항목 구분)</h3>
                         <textarea rows="3" onchange="updateRoleTaskLines('hallTasks', this.value)" class="w-full p-3 rounded-xl border border-slate-300 bg-white text-sm leading-relaxed">${m.hallTasks.join("\n")}</textarea>
                     </div>
                 `;
@@ -844,7 +1047,7 @@
             }
 
             if (!isEditMode) {
-                container.innerHTML = appState.schedules.map((item, idx) => `
+                container.innerHTML = appState.schedules.map((item) => `
                     <div class="flex items-start gap-4 p-4 sm:p-5 rounded-2xl border ${item.highlight ? 'bg-amber-50/90 border-amber-400 shadow-xs' : 'bg-purple-50/40 border-purple-200'}">
                         <div class="shrink-0 text-center">
                             <span class="px-3 py-1.5 rounded-xl font-extrabold text-xs sm:text-sm inline-block ${item.highlight ? 'bg-amber-400 text-indigo-950' : 'bg-purple-700 text-white'}">
@@ -852,43 +1055,75 @@
                             </span>
                         </div>
                         <div class="flex-1 space-y-1">
-                            <div class="flex items-center gap-2">
-                                <h3 class="font-extrabold text-base text-indigo-950">${item.title}</h3>
-                                ${item.highlight ? '<span class="text-[11px] font-extrabold px-2 py-0.5 rounded bg-rose-100 text-rose-700">필독</span>' : ''}
+                            <div class="flex flex-wrap items-center gap-2">
+                                <h3 class="font-extrabold text-sm sm:text-base text-indigo-950">${item.title}</h3>
+                                ${item.highlight ? '<span class="text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-amber-300 text-indigo-950">필수 복귀 체크</span>' : ''}
                             </div>
-                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">${item.note}</p>
+                            <p class="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">${item.note}</p>
                         </div>
                     </div>
                 `).join("");
             } else {
                 container.innerHTML = appState.schedules.map((item, idx) => `
-                    <div class="p-4 rounded-2xl bg-amber-50/30 border-2 border-slate-300 space-y-3">
+                    <div class="p-4 rounded-2xl bg-amber-50/40 border-2 border-amber-300 space-y-2.5">
                         <div class="flex flex-wrap items-center justify-between gap-2">
                             <div class="flex items-center gap-2">
-                                <input type="text" value="${item.time}" placeholder="시간 (예: 13시 30분)" onchange="updateScheduleField(${idx}, 'time', this.value)" class="w-32 px-3 py-1.5 rounded-lg border border-slate-300 font-bold text-sm bg-white">
-                                <label class="flex items-center gap-1.5 text-xs font-bold text-slate-700 cursor-pointer">
-                                    <input type="checkbox" ${item.highlight ? 'checked' : ''} onchange="updateScheduleField(${idx}, 'highlight', this.checked)" class="rounded text-amber-500">
-                                    중요 강조 표시
+                                <input type="text" value="${item.time}" onchange="updateScheduleField(${idx}, 'time', this.value)" class="w-28 px-2.5 py-1.5 rounded-lg border border-slate-300 font-extrabold text-xs bg-white" placeholder="시간 (예: 13시 30분)">
+                                <label class="text-xs font-bold text-amber-900 flex items-center gap-1 cursor-pointer">
+                                    <input type="checkbox" ${item.highlight ? 'checked' : ''} onchange="updateScheduleField(${idx}, 'highlight', this.checked)" class="rounded"> 강조 표시
                                 </label>
                             </div>
-                            <button onclick="removeScheduleRow(${idx})" class="text-xs font-bold text-rose-600 hover:underline flex items-center gap-1">
+                            <button onclick="removeScheduleRow(${idx})" class="text-rose-500 hover:text-rose-700 text-xs font-bold px-2 py-1">
                                 <i class="fa-solid fa-trash-can"></i> 삭제
                             </button>
                         </div>
-                        <div>
-                            <input type="text" value="${item.title}" placeholder="일정 제목" onchange="updateScheduleField(${idx}, 'title', this.value)" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 font-bold text-sm bg-white">
-                        </div>
-                        <div>
-                            <textarea rows="2" placeholder="세부 안내 설명" onchange="updateScheduleField(${idx}, 'note', this.value)" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-xs bg-white">${item.note}</textarea>
-                        </div>
+                        <input type="text" value="${item.title}" onchange="updateScheduleField(${idx}, 'title', this.value)" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 font-bold text-sm bg-white" placeholder="일정 제목">
+                        <textarea rows="2" onchange="updateScheduleField(${idx}, 'note', this.value)" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-xs bg-white" placeholder="세부 안내 내용">${item.note}</textarea>
                     </div>
                 `).join("");
             }
         }
 
+        function renderReferenceChecklist() {
+            const container = document.getElementById("referenceChecklistContainer");
+            if (!container) return;
+
+            const notes = appState.setupNotes || DEFAULT_DATA.setupNotes;
+
+            if (!isEditMode) {
+                container.innerHTML = notes.map(item => `
+                    <div class="p-4 rounded-2xl bg-purple-50/50 border border-purple-200/90 flex items-start gap-3.5 shadow-2xs">
+                        <div class="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                            <i class="fa-solid ${item.icon || 'fa-check'}"></i>
+                        </div>
+                        <div class="space-y-1">
+                            <h3 class="font-extrabold text-sm sm:text-base text-indigo-950">${item.category}</h3>
+                            <p class="text-xs sm:text-sm text-slate-700 font-medium leading-relaxed">${item.detail}</p>
+                        </div>
+                    </div>
+                `).join("");
+            } else {
+                container.innerHTML = notes.map((item, idx) => `
+                    <div class="p-4 rounded-2xl bg-amber-50/40 border-2 border-amber-300 space-y-2">
+                        <label class="text-[11px] font-extrabold text-amber-900 block">세팅 항목 ${idx + 1}</label>
+                        <input type="text" value="${item.category}" onchange="updateSetupNote(${idx}, 'category', this.value)" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 font-bold text-sm bg-white" placeholder="항목 제목">
+                        <textarea rows="2" onchange="updateSetupNote(${idx}, 'detail', this.value)" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-xs bg-white" placeholder="세부 세팅 내용">${item.detail}</textarea>
+                    </div>
+                `).join("");
+            }
+        }
+
+        window.updateSetupNote = function(idx, field, val) {
+            if (!appState.setupNotes) {
+                appState.setupNotes = JSON.parse(JSON.stringify(DEFAULT_DATA.setupNotes));
+            }
+            if (!appState.setupNotes[idx]) return;
+            appState.setupNotes[idx][field] = val;
+        };
+
         window.switchTab = function(tabName) {
             currentTab = tabName;
-            ["search", "all", "schedule"].forEach(t => {
+            ["search", "all", "schedule", "reference"].forEach(t => {
                 const view = document.getElementById(`view-${t}`);
                 const btn = document.getElementById(`tab-${t}`);
                 if (view) view.classList.toggle("hidden", t !== tabName);
